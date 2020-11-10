@@ -1,0 +1,42 @@
+name: Github Pages
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      - name: Read .env
+        id: hugo-version
+        run: |
+          . ./.env
+          echo "::set-output name=HUGO_VERSION::${HUGO_VERSION}"
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '${{ steps.hugo-version.outputs.HUGO_VERSION }}'
+          extended: true
+
+      - name: Build
+        run: hugo --minify
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
+          deploy_key: ${{ secrets.ACTION_DEPLOY_KEY }}
+          external_repository: jugggao/jugggao.github.io
+          publish_branch: master
+          publish_dir: ./public
+          user_name: 'jugg.gao'
+          user_email: 'jugg.gao@qq.com'
+          commit_message: ${{ github.event.head_commit.message }}
+          enable_jekyll: false
+          allow_empty_commit: true

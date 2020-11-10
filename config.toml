@@ -1,0 +1,43 @@
+baseURL = "http://jugggao.github.io/"
+languageCode = "en-us"
+title = "剑十三"
+
+theme = "hugo-small"
+[author]
+name = "剑十三"
+homepage = "JuggGao"
+
+[params]
+  subtitle = "与其感慨路难行，不如马上出发"
+  dateFmt = "02.01.2006 15:04"
+# Header
+[menu]
+  [[menu.main]]
+  identifier = "posts"
+  name = "Posts"
+  url = "/posts/"
+  weight = 1
+
+  [[menu.main]]
+  identifier = "categories"
+  name = "Categories"
+  url = "/categories/"
+  weight = 2
+
+  [[menu.main]]
+  identifier = "tags"
+  name = "Tags"
+  url = "/tags/"
+  weight = 3
+
+  [[menu.main]]
+  identifier = "about"
+  name = "About"
+  url = "/about/"
+  weight = 4
+
+# Footer
+[[menu.footer]]
+name = "Github"
+url = "https://github.com/jugggao"
+weight = 1
