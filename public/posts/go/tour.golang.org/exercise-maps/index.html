@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<style type=text/css>body{font-family:monospace;}</style>
+	<style>a{TEXT-DECORATION:none}</style>
+	<title>A Tour of Go - Exercise: Maps</title>
+	
+	
+	<link rel="stylesheet" href="/css/style.css">
+	
+	
+</head>
+<body>
+	<header>
+	------------<br>
+	-- <a href="http://jugggao.github.io/">剑十三</a> --<br>
+	------------
+	<div style="float: right;">与其感慨路难行，不如马上出发</div><br>
+	<p>
+	<nav>
+			| <a href="/"><b>主页</b></a> |
+			
+			
+			<a href="/posts/"><b>文档</b></a> |
+			
+			<a href="/categories/"><b>分类</b></a> |
+			
+			<a href="/tags/"><b>标签</b></a> |
+			
+			<a href="/about/"><b>关于</b></a> |
+			
+	</nav>
+	</p>
+	
+</header>
+
+	
+	<main>
+		<article>
+			<h1>A Tour of Go - Exercise: Maps</h1>
+			<b><time>11.11.2020</time></b>
+		       
+		           <a href="/tags/go">Go</a>
+        	       
+		           <a href="/tags/a-tour-of-go">A Tour of Go</a>
+        	       
+		           <a href="/tags/exercise">Exercise</a>
+        	       
+
+			<div>
+				<h3 id="exercise-mapshttpstourgolangorgmoretypes23"><a href="https://tour.golang.org/moretypes/23">Exercise: Maps</a></h3>
+<p>Implement <code>WordCount</code>. It should return a map of the counts of each “word” in the string <code>s</code>. The <code>wc.Test</code> function runs a test suite against the provided function and prints success or failure.</p>
+<p>You might find <a href="https://golang.org/pkg/strings/#Fields">strings.Fields</a> helpful.</p>
+<hr>
+<h3 id="1-解题">1. 解题</h3>
+<p>单词统计是一个很经典的小程序了，使用 Python 解法如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> collections <span style="color:#f92672">import</span> Counter
+<span style="color:#f92672">import</span> re
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">word_count</span>(s):
+    words <span style="color:#f92672">=</span> [i<span style="color:#f92672">.</span>lower() <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#34;\w+&#34;</span>, s)]
+    <span style="color:#66d9ef">return</span> Counter(words)
+</code></pre></div><p>使用 Go 解法如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;strings&#34;</span>
+	<span style="color:#e6db74">&#34;golang.org/x/tour/wc&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">WordCount</span>(<span style="color:#a6e22e">s</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">int</span> {
+	<span style="color:#a6e22e">strSlice</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Fields</span>(<span style="color:#a6e22e">s</span>)
+	<span style="color:#a6e22e">wordCount</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">int</span>)
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">strSlice</span> {
+		<span style="color:#a6e22e">wordCount</span>[<span style="color:#a6e22e">i</span>]<span style="color:#f92672">++</span>
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">wordCount</span>
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">wc</span>.<span style="color:#a6e22e">Test</span>(<span style="color:#a6e22e">WordCount</span>)
+}
+</code></pre></div><h3 id="2-思考">2. 思考</h3>
+<p><strong>Q：Python 代码量比 Go 要少，得益于 Python 标准库的丰富。那么如果不使用 <code>Counter</code> 类，Python 代码量如何？</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> re
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">word_count</span>(s):
+    words <span style="color:#f92672">=</span> [i<span style="color:#f92672">.</span>lower() <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#34;\w+&#34;</span>, s)]
+    count <span style="color:#f92672">=</span> {}
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> words:
+        <span style="color:#66d9ef">if</span> i <span style="color:#f92672">in</span> count<span style="color:#f92672">.</span>keys():
+            count[i] <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+        <span style="color:#66d9ef">else</span>:
+            count[i] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">return</span> count
+</code></pre></div><p>Python 比 Go 要多一个步骤，首先判断 key 是否存在，因为 python 是动态类型编程语言，如果读取一个不存在的 key，会报错。
+但是 Go 是静态类型语言，实现已经定义了 Map 里的元素类型是 Int，读取不存在的 key 为其零值 0，可以直接计算。
+这也是静态类型语言的优点。</p>
+<p><strong>Q：Python 在自增时使用 += 运算符，为什么不能像 C 或 Go 语言用 ++ 运算符来进行自增呢？</strong></p>
+<p><code>+=</code> 代表改变了变量，而 <code>++</code> 代表改变对象本身。
+Python 的模型规定，数值对象是不可变的，所以 <code>++</code> 就没有意义了，而在使用 <code>+=</code> 运算符的过程实际是：将 a + 1 存储到另一个内存区域中，然后再将 a 赋值至新的内存区域当中。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> a <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> id(a)
+<span style="color:#ae81ff">2306726521136</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> a <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> id(a)
+<span style="color:#ae81ff">2306726521168</span>
+</code></pre></div><p>Python 中的变量赋值可以用「指针」的概念去理解，更像是贴标签的操作，多个变量名可以指向同一内存区域表示的值。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> a <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> b <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> c <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> id(a)
+<span style="color:#ae81ff">2306726521136</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> id(b)
+<span style="color:#ae81ff">2306726521136</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> id(c)
+<span style="color:#ae81ff">2306726521136</span>
+</code></pre></div><p>所以，我们也不想看到改变 a 自身的值把 b 也改变的情况出现吧。<br>
+而 Go 中的变量已变量名为基准，就很容易理解了，就是将 a 原本的内存区域表示的值替换为原本的值 +1。</p>
+<p>这次我更倾向于 Python 的语法，可读性高，并且少一些选择，少一些烦恼。</p>
+<p><strong>Q: Go 语言中的 strings.Fields 方法和 Python 中的正则和列表推导相比孰优孰劣？</strong></p>
+<p>看起来 Go 更好一些，我一向是不喜欢使用正则的，效率低。<br>
+也不知道 Go 底层是怎么处理的，等以后有读源码的能力在解答吧。</p>
+<h3 id="3-其他">3. 其他</h3>
+<p>另外，这道题提供了一个<a href="https://github.com/golang/tour/blob/master/wc/wc.go">测试函数</a> <code>wc.Test</code>，可以看一看，可以初步了解 Go 语言程序测试的写法。</p>
+			</div>
+		</article>
+	</main>
+<aside>
+	<div>
+		<div>
+			<h3>最近文章</h3>
+		</div>
+		<div>
+			<ul>
+				
+				<li><a href="/posts/go/tour.golang.org/exercise-maps/">A Tour of Go - Exercise: Maps</a></li>
+				
+			</ul>
+		</div>
+	</div>
+</aside>
+
+
+	<footer>
+	<p>| &copy; 2020 <a href="http://jugggao.github.io/"><b>剑十三</b></a> |
+	<a href="https://github.com/jugggao"><b>Github</b></a> |
+	</p>
+</footer>
+
+</body>
+</html>

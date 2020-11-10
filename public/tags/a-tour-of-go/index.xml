@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>A Tour of Go on 剑十三</title>
+    <link>http://jugggao.github.io/tags/a-tour-of-go/</link>
+    <description>Recent content in A Tour of Go on 剑十三</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 11 Nov 2020 00:00:00 +0800</lastBuildDate><atom:link href="http://jugggao.github.io/tags/a-tour-of-go/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A Tour of Go - Exercise: Maps</title>
+      <link>http://jugggao.github.io/posts/go/tour.golang.org/exercise-maps/</link>
+      <pubDate>Wed, 11 Nov 2020 00:00:00 +0800</pubDate>
+      
+      <guid>http://jugggao.github.io/posts/go/tour.golang.org/exercise-maps/</guid>
+      <description>&lt;h3 id=&#34;exercise-mapshttpstourgolangorgmoretypes23&#34;&gt;&lt;a href=&#34;https://tour.golang.org/moretypes/23&#34;&gt;Exercise: Maps&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Implement &lt;code&gt;WordCount&lt;/code&gt;. It should return a map of the counts of each “word” in the string &lt;code&gt;s&lt;/code&gt;. The &lt;code&gt;wc.Test&lt;/code&gt; function runs a test suite against the provided function and prints success or failure.&lt;/p&gt;
+&lt;p&gt;You might find &lt;a href=&#34;https://golang.org/pkg/strings/#Fields&#34;&gt;strings.Fields&lt;/a&gt; helpful.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
