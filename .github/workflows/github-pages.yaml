@@ -35,7 +35,7 @@ jobs:
           external_repository: jugggao/jugggao.github.io
           publish_branch: master
           publish_dir: ./public
-          cname: jugggao.com
+          cname: www.jugggao.com
           user_name: 'jugg.gao'
           user_email: 'jugg.gao@qq.com'
           commit_message: ${{ github.event.head_commit.message }}
