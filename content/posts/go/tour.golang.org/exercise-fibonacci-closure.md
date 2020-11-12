@@ -63,7 +63,7 @@ if __name__ == "__main__":
  
 `Fibonacci()` 类的实例 f 在哪里存储历史值很明显：self.a 和 self.b 实例属性。但是闭包实现的 f 函数在哪里寻找 a 和 b 的历史值呢？
 
-在 `func` 函数中，a 和 b 为自由变量（free variable），指未在本地作用域中绑定的变量，审查闭包返回的 func 对象，可以发现 Python 在 `f.__code__.co_freevars` 属性中保存自由变量的名称；在 `f.__closure__` 中的各个元素对应 `f.__code__.co_freevars` 中的一个名称，这些元素是 cell 对象，有个 cell_contents 属性，保存其值。
+在 `func` 函数中，a 和 b 为自由变量（free variable），指未在本地作用域中绑定的变量，审查返回的 func 对象，可以发现 Python 在 `f.__code__.co_freevars` 属性中保存自由变量的名称；在 `f.__closure__` 中的各个元素对应 `f.__code__.co_freevars` 中的一个名称，这些元素是 cell 对象，有个 cell_contents 属性，保存其值。
 
 ```python
 print(f.__code__.co_freevars) # ('a', 'b')
