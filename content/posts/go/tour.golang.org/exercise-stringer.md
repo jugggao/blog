@@ -68,10 +68,11 @@ func main() {
 ```
 
 解析：
-
 1. 首先给 `IPAddr` 实现一个 `Convert() string` 的方法，将数组 `[4]byte` 转换为 `string`。
+
 2. 然后给 `IPAddr` 添加一个 `String() string` 的方法，其中调用了 `Convert() string` 方法返回转换后的输出。
-3. 这样调用 `fmt.Printf` 时，会对 `IPAddr [4]byte` 类型调用 `Stringer` 接口下定义的 `String()` （隐式实现）方法来输出。
+
+3. 这样调用 `fmt.Printf` 时，会对 `IPAddr [4]byte` 类型调用 `Stringer` 接口下定义的 `String()` 方法来输出。
 
 Python 实现（使用类来实现修改 print 调用的接口）：
 
