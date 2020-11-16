@@ -15,7 +15,7 @@ enableEmoji = true
   lineNos = false
   lineNumbersInTable = true
   noClasses = true
-  style = "monokai"
+  style = "dracula"
   tabWidth = 4
 
 [author]
